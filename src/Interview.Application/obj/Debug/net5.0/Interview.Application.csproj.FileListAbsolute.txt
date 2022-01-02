@@ -1,0 +1,15 @@
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\Interview.Application.deps.json
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\Interview.Application.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\ref\Interview.Application.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\Interview.Application.pdb
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\Interview.Domain.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\bin\Debug\net5.0\Interview.Domain.pdb
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.csproj.AssemblyReference.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.AssemblyInfoInputs.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.AssemblyInfo.cs
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.csproj.CoreCompileInputs.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.csproj.CopyComplete
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\ref\Interview.Application.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Application\obj\Debug\net5.0\Interview.Application.pdb

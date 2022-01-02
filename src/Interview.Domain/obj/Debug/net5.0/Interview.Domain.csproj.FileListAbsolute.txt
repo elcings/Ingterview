@@ -1,0 +1,12 @@
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\bin\Debug\net5.0\Interview.Domain.deps.json
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\bin\Debug\net5.0\Interview.Domain.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\bin\Debug\net5.0\ref\Interview.Domain.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\bin\Debug\net5.0\Interview.Domain.pdb
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.csproj.AssemblyReference.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.AssemblyInfoInputs.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.AssemblyInfo.cs
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.csproj.CoreCompileInputs.cache
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\ref\Interview.Domain.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\src\Interview.Domain\obj\Debug\net5.0\Interview.Domain.pdb
