@@ -8,6 +8,6 @@ namespace Interview.WorkerService.Services
 {
     public interface IDoWork
     {
-        Task Do();
+        Task RunAsync();
     }
 }

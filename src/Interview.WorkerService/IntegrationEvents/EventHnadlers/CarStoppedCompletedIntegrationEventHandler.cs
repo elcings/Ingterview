@@ -21,7 +21,7 @@ namespace Interview.WorkerService.IntegrationEvents.EventHnadlers
         {
             if (@event.Message == "stop")
             {
-               await _doWork.Do();
+               await _doWork.RunAsync();
             }
         }
     }

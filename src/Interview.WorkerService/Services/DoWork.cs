@@ -22,7 +22,7 @@ namespace Interview.WorkerService.Services
             _externalClientService = externalClientService;
         }
 
-        public async Task Do()
+        public async Task RunAsync()
         {
             //var fuel= await _externalClientService.GetFuelLevelAsync();
             //var distance = await _externalClientService.GetTravelDistanceAsync();

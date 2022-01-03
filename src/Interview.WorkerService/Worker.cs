@@ -34,7 +34,7 @@ namespace Interview.WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                //  _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
+                //_eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
 
                 using (var scope = Services.CreateScope())
                 {

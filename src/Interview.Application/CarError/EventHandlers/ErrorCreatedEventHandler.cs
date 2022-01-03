@@ -23,12 +23,12 @@ namespace Interview.Application.CarError.EventHandlers
             _logger = logger;
         }
         
-        public async Task Handle(DomainEventNotification<ErrorCreatedEvent> notification, CancellationToken cancellationToken)
+        public async  Task Handle(DomainEventNotification<ErrorCreatedEvent> notification, CancellationToken cancellationToken)
         {
             var domainEvent = notification.DomainEvent;
 
             _logger.LogInformation("Domain Event: {DomainEvent}", domainEvent.GetType().Name);
-            await _mailService.SendEmail(new MailRequest { ToEmail = "elcinaliyevgs@gmail.com", Body = domainEvent.Error.Description,Subject="Fault in your car" });
+           await _mailService.SendEmail(new MailRequest { ToEmail = "elcinaliyevgs@gmail.com", Body = domainEvent.Error.Description,Subject="Fault in your car" });
         }
     }
 }

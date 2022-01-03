@@ -24,10 +24,7 @@ namespace Interview.Application
             {
                 cfg.AddProfile(new MappingProfile());
             });
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-                services.AddMediatR(typeof(CreateFuelLevelCommand).GetTypeInfo().Assembly);
-                services.AddMediatR(typeof(CreateDistanceCommand).GetTypeInfo().Assembly);
-                services.AddMediatR(typeof(CreateErrorCommand).GetTypeInfo().Assembly);
+                services.AddMediatR(typeof(CreateFuelLevelCommand));
                 services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
                 services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
