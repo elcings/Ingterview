@@ -32,7 +32,7 @@ namespace Interview.Application.Common.Behaviours
 
             var elapsedMilliseconds = _timer.ElapsedMilliseconds;
 
-            if (elapsedMilliseconds > 500)
+            if (elapsedMilliseconds > 1000)
             {
                 var requestName = typeof(TRequest).Name;
 
