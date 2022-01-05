@@ -24,10 +24,10 @@ namespace Interview.WorkerService.Services
 
         public async Task RunAsync()
         {
-            //var fuel= await _externalClientService.GetFuelLevelAsync();
-            //var distance = await _externalClientService.GetTravelDistanceAsync();
-            //var error = await _externalClientService.GetErrorAsync();
-            var error = "Error in car";
+            var fuel = await _externalClientService.GetFuelLevelAsync();
+            var distance = await _externalClientService.GetTravelDistanceAsync();
+            var error = await _externalClientService.GetErrorAsync();
+           // var error = "Error in car";
             using (var scope = Services.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
@@ -35,8 +35,8 @@ namespace Interview.WorkerService.Services
                 {
                     await mediator.Send(new CreateErrorCommand { Description = error});
                 }
-                //await mediator.Send(new CreateDistanceCommand { Distance = distance });
-                //await mediator.Send(new CreateFuelLevelCommand { Level = fuel });
+                await mediator.Send(new CreateDistanceCommand { Distance = distance });
+                await mediator.Send(new CreateFuelLevelCommand { Level = fuel });
             }
         }
     }

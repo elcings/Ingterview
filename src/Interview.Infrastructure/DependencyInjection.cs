@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Interview.Application.Common.Interfaces;
 using Interview.Infrastructure.Services;
 using Interview.Application.Common.Models;
+using System;
 
 namespace Interview.Infrastructure
 {
@@ -26,9 +27,10 @@ namespace Interview.Infrastructure
             services.AddScoped(typeof(IFuelLevelRepository), typeof(FuelLevelRepository));
             services.AddScoped(typeof(IErrorRepository), typeof(ErrorRepository));
             services.AddScoped(typeof(IDomainEventService), typeof(DomainEventService));
-   
+
             services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IExternalClientService, ExternalClientService>();
+                
+            services.AddHttpClient<IExternalClientService, ExternalClientService>();
             return services;
         }
     }

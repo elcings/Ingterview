@@ -34,15 +34,15 @@ namespace Interview.WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                //_eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
+                _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
 
-                using (var scope = Services.CreateScope())
-                {
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                //using (var scope = Services.CreateScope())
+                //{
+                //    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-                    await mediator.Send(new CreateErrorCommand { Description = "Your car have fault" });
-                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                }
+                //    await mediator.Send(new CreateErrorCommand { Description = "Your car have fault" });
+                //    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                //}
 
                 await Task.Delay(1000, stoppingToken);
             }

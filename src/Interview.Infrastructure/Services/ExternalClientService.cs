@@ -3,6 +3,8 @@ using Interview.Application.Common.Interfaces;
 using Interview.Application.Common.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,9 @@ namespace Interview.Infrastructure.Services
     {
         private readonly ILogger<ExternalClientService> _logger;
         HttpClient httpClient;
-        public ExternalClientService(ExternalSettings externalSettings, ILogger<ExternalClientService> logger)
+        public ExternalClientService(ExternalSettings externalSettings, ILogger<ExternalClientService> logger,HttpClient httpClient)
         {
             _logger = logger;
-            httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(externalSettings.BaseAddress);
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -27,23 +28,21 @@ namespace Interview.Infrastructure.Services
 
         public async Task<string> GetErrorAsync()
         {
-            try
-            {
-                HttpResponseMessage response = await httpClient.GetAsync("/error");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
+            string content = string.Empty;
+            HttpResponseMessage response;
+            var policy = Policy.Handle<Exception>().WaitAndRetryAsync(5, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)), (ex, time) =>
+              {
+                  _logger.LogError(ex, "Request:  ExternalClientService.GetFuelLevelAsync");
+              });
 
-                    return content;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Request:  ExternalClientService.GetFuelLevelAsync");
-                throw;
-            }
-            return string.Empty;
+            
+           await policy.ExecuteAsync( async () =>
+          {
+              response = await httpClient.GetAsync("/error");
+              content = await  response.Content.ReadAsStringAsync();
+              return Task.FromResult(content);
+          });
+            return content;
         }
 
         public async Task<int> GetFuelLevelAsync()
