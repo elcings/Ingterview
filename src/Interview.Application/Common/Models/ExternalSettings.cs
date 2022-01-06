@@ -9,5 +9,6 @@ namespace Interview.Application.Common.Models
     public class ExternalSettings
     {
         public string BaseAddress { get; set; }
+        public string Token { get; set; }
     }
 }

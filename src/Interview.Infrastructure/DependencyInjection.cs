@@ -7,6 +7,7 @@ using Interview.Application.Common.Interfaces;
 using Interview.Infrastructure.Services;
 using Interview.Application.Common.Models;
 using System;
+using System.Net.Http.Headers;
 
 namespace Interview.Infrastructure
 {
@@ -30,7 +31,13 @@ namespace Interview.Infrastructure
 
             services.AddScoped<IMailService, MailService>();
                 
-            services.AddHttpClient<IExternalClientService, ExternalClientService>();
+            services.AddHttpClient<IExternalClientService, ExternalClientService>(c=> {
+                c.BaseAddress = new Uri(externalSettings.BaseAddress);
+                c.DefaultRequestHeaders.Accept.Clear();
+                c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{externalSettings.Token}");
+
+            });
             return services;
         }
     }
