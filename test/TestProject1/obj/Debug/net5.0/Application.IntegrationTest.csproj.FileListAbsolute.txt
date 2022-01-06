@@ -174,3 +174,10 @@ C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\obj\Debug\n
 C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\obj\Debug\net5.0\Application.IntegrationTest.pdb
 C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\obj\Debug\net5.0\Application.IntegrationTest.genruntimeconfig.cache
 C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Extensions.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.Extensions.Http.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.Extensions.Http.Polly.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Microsoft.Net.Http.Headers.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Polly.dll
+C:\Users\elchin.ali\Desktop\Projects\Own\Interview\test\TestProject1\bin\Debug\net5.0\Polly.Extensions.Http.dll

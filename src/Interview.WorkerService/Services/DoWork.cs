@@ -26,7 +26,6 @@ namespace Interview.WorkerService.Services
         public async Task RunAsync()
         {
             var error = await _externalClientService.GetDinOfficesAsync();
-           // var error = "Error in car";
             using (var scope = Services.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();

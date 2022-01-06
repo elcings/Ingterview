@@ -2,17 +2,12 @@ using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
 using Interview.Application;
-using Interview.Application.Common.Models;
 using Interview.Infrastructure;
 using Interview.WorkerService.IntegrationEvents.EventHnadlers;
 using Interview.WorkerService.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Interview.WorkerService
 {
