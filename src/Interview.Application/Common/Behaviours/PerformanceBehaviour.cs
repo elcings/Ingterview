@@ -35,10 +35,11 @@ namespace Interview.Application.Common.Behaviours
             if (elapsedMilliseconds > 1000)
             {
                 var requestName = typeof(TRequest).Name;
-
-
-                _logger.LogWarning("Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+                if(_logger.IsEnabled(LogLevel.Warning))
+                {
+                    _logger.LogWarning("Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
                     requestName, elapsedMilliseconds, request);
+                }
             }
 
             return response;

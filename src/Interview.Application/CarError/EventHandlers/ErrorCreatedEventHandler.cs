@@ -27,8 +27,11 @@ namespace Interview.Application.CarError.EventHandlers
         {
             var domainEvent = notification.DomainEvent;
 
-            _logger.LogInformation("Domain Event: {DomainEvent}", domainEvent.GetType().Name);
-           await _mailService.SendEmail(new MailRequest { ToEmail = "elcinaliyevgs@gmail.com", Body = domainEvent.Error.Description,Subject="Fault in your car" });
+            if(_logger.IsEnabled(LogLevel.Information))
+            {
+                _logger.LogInformation("Domain Event: {DomainEvent}", domainEvent.GetType().Name);
+            }
+            await _mailService.SendEmail(new MailRequest { ToEmail = "elcinaliyevgs@gmail.com", Body = domainEvent.Error.Description,Subject="Fault in your car" });
         }
     }
 }

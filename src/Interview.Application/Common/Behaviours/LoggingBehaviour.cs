@@ -18,13 +18,16 @@ namespace Interview.Application.Common.Behaviours
             _logger = logger;
         }
 
-        public async Task Process(TRequest request, CancellationToken cancellationToken)
+        public  Task Process(TRequest request, CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
-           
 
-            _logger.LogInformation(" Request: {Name}  {@Request}",
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+                _logger.LogInformation(" Request: {Name}  {@Request}",
                 requestName, request);
+            }
+            return Task.CompletedTask;
         }
     }
 }
