@@ -31,7 +31,7 @@ namespace Interview.Infrastructure.Services
             HttpResponseMessage response;
             var policy = Policy.Handle<Exception>().WaitAndRetryAsync(2, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)), (ex, time) =>
               {
-                  _logger.LogError(ex.Message, "Request:  ExternalClientService.GetFuelLevelAsync");
+                  _logger.LogError(ex, "Request:  ExternalClientService.GetFuelLevelAsync");
               });
 
             
