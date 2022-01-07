@@ -8,6 +8,9 @@ using Interview.WorkerService.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
 
 namespace Interview.WorkerService
 {
@@ -15,7 +18,21 @@ namespace Interview.WorkerService
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("Application started....");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (System.Exception ex)
+            {
+                logger.Error(ex, "Exception duiring execution...");
+                throw;
+            }
+            finally {
+                LogManager.Shutdown();
+            }
+           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -39,8 +56,13 @@ namespace Interview.WorkerService
                         return EventBusFactory.Create(config, sp);
 
                     });
-                    services.AddScoped<IDoWork, DoWork>();
+                    services.AddSingleton<IDoWork, DoWork>();
                     services.AddHostedService<Worker>();
-                });
+                })
+            .ConfigureLogging(logging=> {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+            
+            }).UseNLog();
     }
 }

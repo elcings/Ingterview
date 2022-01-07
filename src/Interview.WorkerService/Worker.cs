@@ -4,6 +4,7 @@ using Interview.Application.Distances.Command;
 using Interview.Application.Fuel.Command;
 using Interview.WorkerService.IntegrationEvents.EventHnadlers;
 using Interview.WorkerService.IntegrationEvents.Events;
+using Interview.WorkerService.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,12 +22,14 @@ namespace Interview.WorkerService
         private readonly ILogger<Worker> _logger;
         public IServiceProvider Services { get; }
         IEventBus _eventBus;
+        IDoWork _doWork;
 
-        public Worker(ILogger<Worker> logger, IServiceProvider services,IEventBus eventBus)
+        public Worker(ILogger<Worker> logger, IServiceProvider services,IEventBus eventBus,IDoWork doWork)
         {
             Services = services;
             _logger = logger;
             _eventBus = eventBus;
+            _doWork = doWork;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -34,15 +37,15 @@ namespace Interview.WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
+                //  _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
 
                 //using (var scope = Services.CreateScope())
                 //{
-                //    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-                //    await mediator.Send(new CreateErrorCommand { Description = "Your car have fault" });
-                //    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                //}
+                //    var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
+                    await  _doWork.RunAsync();
+                  
+                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+               // }
 
                 await Task.Delay(1000, stoppingToken);
             }
