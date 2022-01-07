@@ -19,15 +19,7 @@ namespace Interview.WorkerService
         public static void Main(string[] args)
         {
 
-      //      var configuration = new ConfigurationBuilder()
-      //.SetBasePath(Directory.GetCurrentDirectory())
-      //.AddJsonFile("appsettings.json")
-      //.AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
-      //.Build();
-
-      //      Log.Logger = new LoggerConfiguration()
-      //         .ReadFrom.Configuration(configuration)
-      //         .CreateLogger();
+    
             var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
             try
             {

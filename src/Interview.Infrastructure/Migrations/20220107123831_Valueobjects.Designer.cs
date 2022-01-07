@@ -4,14 +4,16 @@ using Interview.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Interview.Infrastructure.Migrations
 {
     [DbContext(typeof(CarDbContext))]
-    partial class CarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220107123831_Valueobjects")]
+    partial class Valueobjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,37 +107,6 @@ namespace Interview.Infrastructure.Migrations
                     b.ToTable("FuelLevels");
                 });
 
-            modelBuilder.Entity("Interview.Domain.Entities.TodoItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("DistanceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistanceId");
-
-                    b.ToTable("TodoItem");
-                });
-
             modelBuilder.Entity("Interview.Domain.Entities.Distance", b =>
                 {
                     b.OwnsOne("Interview.Domain.ValueObjects.Colour", "Colour", b1 =>
@@ -155,20 +126,6 @@ namespace Interview.Infrastructure.Migrations
                         });
 
                     b.Navigation("Colour");
-                });
-
-            modelBuilder.Entity("Interview.Domain.Entities.TodoItem", b =>
-                {
-                    b.HasOne("Interview.Domain.Entities.Distance", "Distance")
-                        .WithMany("TodoItems")
-                        .HasForeignKey("DistanceId");
-
-                    b.Navigation("Distance");
-                });
-
-            modelBuilder.Entity("Interview.Domain.Entities.Distance", b =>
-                {
-                    b.Navigation("TodoItems");
                 });
 #pragma warning restore 612, 618
         }

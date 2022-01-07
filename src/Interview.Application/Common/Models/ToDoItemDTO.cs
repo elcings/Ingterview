@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace Interview.Application.Common.Models
 {
-    public class DinResponse
+    public class ToDoItemDTO
     {
-        public List<Din> Value { get; set; }
-       
-    }
-
-    public class Din {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

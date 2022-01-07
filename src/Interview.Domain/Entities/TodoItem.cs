@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Interview.Domain.Entities
 {
-    public class FuelLevel:BaseEntity, IAggregateRoot
+    public class TodoItem:BaseEntity
     {
-        public int Level { get; set; }
+        public string Name { get; set; }
+        public Distance Distance { get; set; }
     }
 }

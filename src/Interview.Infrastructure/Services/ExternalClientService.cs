@@ -29,7 +29,8 @@ namespace Interview.Infrastructure.Services
         {
              string content = string.Empty;
             HttpResponseMessage response;
-            var policy = Policy.Handle<Exception>().WaitAndRetryAsync(2, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)), (ex, time) =>
+            var policy = Policy.Handle<HttpRequestException>().Or<TaskCanceledException>()
+            .WaitAndRetryAsync(2, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)), (ex,time) =>
               {
                   _logger.LogError(ex, "Request:  ExternalClientService.GetFuelLevelAsync");
               });
@@ -38,7 +39,9 @@ namespace Interview.Infrastructure.Services
            await policy.ExecuteAsync( async () =>
           {
               response = await _httpClient.GetAsync("getDinOffices");
-              content = await  response.Content.ReadAsStringAsync();
+              response.EnsureSuccessStatusCode();
+              content = await response.Content.ReadAsStringAsync();
+             
           });
             var result = JsonConvert.DeserializeObject<DinResponse>(content);
             return result;

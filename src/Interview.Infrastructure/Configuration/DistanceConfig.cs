@@ -16,6 +16,8 @@ namespace Interview.Infrastructure.Configuration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Created).IsRequired().HasColumnName("Date");
             builder.Property(x => x.distance).IsRequired().HasColumnName("Distance");
+            builder.OwnsOne(b => b.Colour);
+
         }
     }
 }

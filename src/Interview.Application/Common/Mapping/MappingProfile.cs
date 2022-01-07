@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Interview.Application.CarError.Command;
+using Interview.Application.Common.Models;
 using Interview.Application.Distances.Command;
 using Interview.Application.Fuel.Command;
 using Interview.Domain.Entities;
@@ -21,7 +22,8 @@ namespace Interview.Application.Common.Mapping
             AllowNullDestinationValues = true;
             CreateMap<FuelLevel, CreateFuelLevelCommand>().ReverseMap();
             CreateMap<Error, CreateErrorCommand>().ReverseMap();
-            CreateMap<Distance, CreateDistanceCommand>().ForMember(x => x.Distance, opt => opt.MapFrom(src => src.distance)).ReverseMap();
+            CreateMap<TodoItem, ToDoItemDTO>().ReverseMap();
+            CreateMap<Distance, CreateDistanceCommand>().ForMember(x => x.Distance, opt => opt.MapFrom(src => src.distance)).ForMember(a=>a.Colour,opt=>opt.MapFrom(src=>src.Colour.ToString())).ReverseMap();
         }
        
     }

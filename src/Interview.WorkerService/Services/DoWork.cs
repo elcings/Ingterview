@@ -33,13 +33,9 @@ namespace Interview.WorkerService.Services
             using (var scope = Services.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                if (string.IsNullOrEmpty(error.Message))
+                if (error.Value!=null)
                 {
                     await mediator.Send(new CreateErrorCommand { Description = JsonConvert.SerializeObject(error) });
-                }
-                else {
-                    _logger.LogError("DoWork.RunAsync:{0}",error.Message);
-                
                 }
 
             }

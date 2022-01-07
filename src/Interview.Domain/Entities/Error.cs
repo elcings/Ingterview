@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace Interview.Domain.Entities
 {
-    public class Error:BaseEntity, IHasDomainEvent
+    public class Error:BaseEntity, IHasDomainEvent, IAggregateRoot
     {
         public string Description { get; set; }
+
         private bool _done;
         public bool Done
         {

@@ -15,6 +15,7 @@ namespace Interview.Application.CarError.Command
    public  class CreateErrorCommand:IRequest<Guid>
     {
         public string Description { get; set; }
+        public string Mail { get; set; }
     }
 
     public class CreateErrorCommandHandler : IRequestHandler<CreateErrorCommand, Guid>

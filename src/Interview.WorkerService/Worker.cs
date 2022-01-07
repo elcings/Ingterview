@@ -35,19 +35,24 @@ namespace Interview.WorkerService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                _logger.LogInformation("Application started  at: {time}", DateTimeOffset.Now);
 
                 //  _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
 
                 using (var scope = Services.CreateScope())
                 {
-                    var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
-                    await dowork.RunAsync();
+                    //  var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
+                    //  await dowork.RunAsync();
+                    var mediatr = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    var Id=  await mediatr.Send(new CreateDistanceCommand() { Distance = 45,Colour= "#FF5733" ,ToDoItems=new List<Application.Common.Models.ToDoItemDTO> { new Application.Common.Models.ToDoItemDTO { Name="Elcin"},new Application.Common.Models.ToDoItemDTO { Name="Ilkin"} } });
 
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }
 
                 await Task.Delay(1000, stoppingToken);
+               
             }
+            _logger.LogInformation("Application Stopped  at: {time}", DateTimeOffset.Now);
         }
     }
 }

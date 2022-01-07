@@ -9,12 +9,15 @@ using Interview.Domain.Repositories;
 using AutoMapper;
 using System.Threading;
 using Interview.Domain.Entities;
+using Interview.Application.Common.Models;
 
 namespace Interview.Application.Distances.Command
 {
     public class CreateDistanceCommand:IRequest<Guid>
     {
         public long Distance { get; set; }
+        public string Colour { get; set; }
+        public List<ToDoItemDTO> ToDoItems { get; set; }
     }
 
     public class CreateDistanceCommandHandler : IRequestHandler<CreateDistanceCommand, Guid>
