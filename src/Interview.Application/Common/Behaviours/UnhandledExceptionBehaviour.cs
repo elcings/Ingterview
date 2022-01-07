@@ -27,10 +27,8 @@ namespace Interview.Application.Common.Behaviours
             catch (Exception ex)
             {
                 var requestName = typeof(TRequest).Name;
-                if (_logger.IsEnabled(LogLevel.Error))
-                {
+
                     _logger.LogError(ex, "Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
-                }
                 throw;
             }
         }

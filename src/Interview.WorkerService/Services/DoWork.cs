@@ -4,6 +4,7 @@ using Interview.Application.Distances.Command;
 using Interview.Application.Fuel.Command;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,13 @@ namespace Interview.WorkerService.Services
     {
         private IExternalClientService _externalClientService;
         IServiceProvider Services { get; }
-        public DoWork(IExternalClientService externalClientService , IServiceProvider services)
+        ILogger<DoWork> _logger;
+        public DoWork(IExternalClientService externalClientService , IServiceProvider services,ILogger<DoWork> logger)
         {
             Services = services;
             _externalClientService = externalClientService;
+            _logger = logger;
+         
         }
 
         public async Task RunAsync()
@@ -29,9 +33,13 @@ namespace Interview.WorkerService.Services
             using (var scope = Services.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                if (!string.IsNullOrEmpty(error.Message))
+                if (string.IsNullOrEmpty(error.Message))
                 {
-                    await mediator.Send(new CreateErrorCommand { Description = JsonConvert.SerializeObject(error)});
+                    await mediator.Send(new CreateErrorCommand { Description = JsonConvert.SerializeObject(error) });
+                }
+                else {
+                    _logger.LogError("DoWork.RunAsync:{0}",error.Message);
+                
                 }
 
             }

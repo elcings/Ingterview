@@ -22,14 +22,13 @@ namespace Interview.WorkerService
         private readonly ILogger<Worker> _logger;
         public IServiceProvider Services { get; }
         IEventBus _eventBus;
-        IDoWork _doWork;
 
-        public Worker(ILogger<Worker> logger, IServiceProvider services,IEventBus eventBus,IDoWork doWork)
+        public Worker(ILogger<Worker> logger, IServiceProvider services,IEventBus eventBus)
         {
             Services = services;
             _logger = logger;
             _eventBus = eventBus;
-            _doWork = doWork;
+ 
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,13 +38,13 @@ namespace Interview.WorkerService
 
                 //  _eventBus.Subscribe<CarStoppedCompletedIntegrationEvent, CarStoppedCompletedIntegrationEventHandler>();
 
-                //using (var scope = Services.CreateScope())
-                //{
-                //    var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
-                    await  _doWork.RunAsync();
-                  
+                using (var scope = Services.CreateScope())
+                {
+                    var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
+                    await dowork.RunAsync();
+
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-               // }
+                }
 
                 await Task.Delay(1000, stoppingToken);
             }

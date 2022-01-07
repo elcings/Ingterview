@@ -24,8 +24,8 @@ namespace Interview.Application.Common.Behaviours
 
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                _logger.LogInformation(" Request: {Name}  {@Request}",
-                requestName, request);
+                _logger.LogInformation(" Request:{Name}  {@Request}", requestName, request);
+
             }
             return Task.CompletedTask;
         }
