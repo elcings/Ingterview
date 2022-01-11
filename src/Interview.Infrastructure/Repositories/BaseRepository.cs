@@ -1,4 +1,5 @@
-﻿using Interview.Domain.Common;
+﻿using Interview.Application.Common.Interfaces;
+using Interview.Domain.Common;
 using Interview.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +29,7 @@ namespace Interview.Infrastructure.Repositories
 
         public async Task<TEntity> GetById(Guid Id)
         {
-            return await _dbSet.FindAsync(Id);
+            return await _dbSet.FirstOrDefaultAsync(x=>x.Id==Id);
         }
 
         public async Task Remove(Guid Id)

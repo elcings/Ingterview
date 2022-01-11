@@ -13,6 +13,6 @@ namespace Interview.Domain.Entities
     {
         public long distance { get; set; }
         public Colour Colour { get; set; } = Colour.White;
-        public List<TodoItem> TodoItems { get; set; } =new List<TodoItem>();
+        public virtual List<TodoItem> TodoItems { get; set; } =new List<TodoItem>();
     }
 }

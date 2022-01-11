@@ -1,5 +1,6 @@
 ﻿using Interview.Application.Common.Interfaces;
 using Interview.Application.Common.Models;
+using M=MailKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Logging;
@@ -50,8 +51,9 @@ namespace Interview.Infrastructure.Services
             }
             builder.HtmlBody = request.Body;
             email.Body = builder.ToMessageBody();
-            using var smtp = new SmtpClient();
-           
+            
+            using var smtp = new SmtpClient(new M.ProtocolLogger("smtp.log"));
+            smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
             try
             {
                 smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);

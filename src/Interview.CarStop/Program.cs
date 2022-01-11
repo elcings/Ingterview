@@ -1,7 +1,12 @@
 ﻿using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
+using Interview.Application;
+using Interview.Application.CarError.Queries;
 using Interview.CarStop.Events;
+using Interview.Infrastructure;
+using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +17,8 @@ namespace Interview.CarStop
     {
         static void Main(string[] args)
         {
-           
+
+
             while (true)
             {
                 Console.WriteLine("Please if you want to stop car write stop");
@@ -48,6 +54,9 @@ namespace Interview.CarStop
             services.AddLogging(con => {
                 con.AddConsole();
             });
+           // IConfiguration configuration = hostContext.Configuration;
+            services.AddApplication();
+          //  services.AddInfrastructure(configuration);
             services.AddSingleton<IEventBus>(sp =>
             {
                 EventBusConfig config = new()

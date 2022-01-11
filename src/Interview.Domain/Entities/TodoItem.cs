@@ -10,6 +10,6 @@ namespace Interview.Domain.Entities
     public class TodoItem:BaseEntity
     {
         public string Name { get; set; }
-        public Distance Distance { get; set; }
+        public virtual Distance Distance { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using EventBus.Base.Abstraction;
 using Interview.Application.CarError.Command;
+using Interview.Application.CarError.Queries;
 using Interview.Application.Distances.Command;
 using Interview.Application.Fuel.Command;
 using Interview.WorkerService.IntegrationEvents.EventHnadlers;
@@ -44,8 +45,11 @@ namespace Interview.WorkerService
                     //  var dowork = scope.ServiceProvider.GetRequiredService<IDoWork>();
                     //  await dowork.RunAsync();
                     var mediatr = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    var Id=  await mediatr.Send(new CreateDistanceCommand() { Distance = 45,Colour= "#FF5733" ,ToDoItems=new List<Application.Common.Models.ToDoItemDTO> { new Application.Common.Models.ToDoItemDTO { Name="Elcin"},new Application.Common.Models.ToDoItemDTO { Name="Ilkin"} } });
+                      //var Id=  await mediatr.Send(new CreateDistanceCommand() { Distance = 45,Colour= "#FF5733" ,ToDoItems=new List<Application.Common.Models.ToDoItemDTO> { new Application.Common.Models.ToDoItemDTO { Name="Elcin"},new Application.Common.Models.ToDoItemDTO { Name="Ilkin"} } });
 
+                     // var id = await mediatr.Send(new CreateErrorCommand() { Description="test"});
+                      var result = mediatr.Send(new GetErrorByIdQuery() );
+                    //{ Id = Guid.Parse("46A65ADF-B9BF-4821-A8F3-5EB0101DAC6D") }
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }
 

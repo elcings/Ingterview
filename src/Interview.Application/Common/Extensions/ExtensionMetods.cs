@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using Interview.Application.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,14 @@ namespace Interview.Application.Common
             if (str.ToLower().EndsWith("%".ToLower())) return str.Replace("%", "");
 
             return str;
+        }
+
+        public static ValidationResult IsNullOrEmpty(this IGuardClause guardClause, string input, string paramName, string message)
+        {
+            if (string.IsNullOrEmpty(input))
+                return ValidationResult.Fail(message);
+            else
+                return  ValidationResult.Success;
         }
     }
 }
