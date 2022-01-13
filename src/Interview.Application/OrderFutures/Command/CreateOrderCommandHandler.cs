@@ -49,6 +49,7 @@ namespace Interview.Application.OrderFutures.Command
             request.OrderItemDtos.ForEach(x => order.AddOrderItem(x.ProductId, x.ProductName, x.UnitPrice, 0, x.PictureUrl, x.Unit));
             var isSave = await _repository.Create(order);
             await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+
             var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserName);
             _eventBus.Publis(orderStartedIntegrationEvent);
             return new ActionResult().Succeed();
