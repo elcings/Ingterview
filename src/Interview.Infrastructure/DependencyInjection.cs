@@ -18,7 +18,7 @@ namespace Interview.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CarDbContext>(option => 
+            services.AddDbContext<OrderDbContext>(option => 
                 option.UseSqlServer(configuration.GetConnectionString("DefaultDBConnection"), sqlServerOptionsAction: b =>
                 {
                     b.EnableRetryOnFailure(maxRetryCount: 5,
@@ -28,7 +28,7 @@ namespace Interview.Infrastructure
 
 
 
-            services.AddScoped<ICarDbContext>(provider => provider.GetRequiredService<CarDbContext>());
+            services.AddScoped<ICarDbContext>(provider => provider.GetRequiredService<OrderDbContext>());
 
 
 
@@ -37,19 +37,24 @@ namespace Interview.Infrastructure
             services.AddSingleton(mailSettings);
             ExternalSettings externalSettings = configuration.GetSection("ExternalSettings").Get<ExternalSettings>();
             services.AddSingleton(externalSettings);
-            services.AddScoped(typeof(IDistanceRepository), typeof(DistanceRepository));
-            services.AddScoped(typeof(IFuelLevelRepository), typeof(FuelLevelRepository));
-            services.AddScoped(typeof(IErrorRepository), typeof(ErrorRepository));
-            services.AddScoped(typeof(IDomainEventService), typeof(DomainEventService));
+            services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+            services.AddScoped(typeof(IBuyerRepository), typeof(BuyerRepository));
+            //services.AddScoped(typeof(IDomainEventService), typeof(DomainEventService));
 
             services.AddScoped<IMailService, MailService>();
                 
             services.AddHttpClient<IExternalClientService, ExternalClientService>(c=> {
-                c.BaseAddress = new Uri(externalSettings.BaseAddress);
                 c.DefaultRequestHeaders.Accept.Clear();
                 c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{externalSettings.Token}");
             });
+
+            //var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>()
+            //    .UseSqlServer(configuration.GetConnectionString("DefaultDBConnection"));
+
+            //var dbContext = new OrderDbContext(optionsBuilder.Options, null);
+            //dbContext.Database.EnsureCreated();
+            //dbContext.Database.Migrate();
             return services;
         }
     }

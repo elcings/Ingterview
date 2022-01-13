@@ -20,7 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Microservice\EventBus.Base\EventBus.Base.csproj" />
+    <ProjectReference Include="..\..\..\Microservice\EventBus.Factory\EventBus.Factory.csproj" />
     <ProjectReference Include="..\Interview.Domain\Interview.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BuyerFutures\Command\" />
+    <Folder Include="BuyerFutures\Query\" />
   </ItemGroup>
 
 </Project>

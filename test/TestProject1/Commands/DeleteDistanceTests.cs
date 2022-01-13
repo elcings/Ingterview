@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
 using Interview.Application.Common.Exceptions;
-using Interview.Application.Distances.Command;
-using Interview.Domain.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,34 +12,34 @@ namespace Application.IntegrationTest.Commands
     using static Testing;
     public class DeleteDistanceTests
     {
-        [Test]
-        public async Task ShouldRequireValidDistanceId()
-        {
-            var command = new DeleteDistanceCommand { Id = Guid.NewGuid() };
+        //[Test]
+        //public async Task ShouldRequireValidDistanceId()
+        //{
+        //    var command = new DeleteDistanceCommand { Id = Guid.NewGuid() };
 
-            await FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-        }
+        //    await FluentActions.Invoking(() =>
+        //        SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+        //}
 
 
-        [Test]
-        public async Task ShouldDeleteDistanceItem()
-        {
+        //[Test]
+        //public async Task ShouldDeleteDistanceItem()
+        //{
  
-            var disatnceId = await SendAsync(new CreateDistanceCommand
-            {
-                Distance=45
-            });
+        //    var disatnceId = await SendAsync(new CreateDistanceCommand
+        //    {
+        //        Distance=45
+        //    });
 
-            await SendAsync(new DeleteDistanceCommand
-            {
-                Id = disatnceId
-            });
+        //    await SendAsync(new DeleteDistanceCommand
+        //    {
+        //        Id = disatnceId
+        //    });
 
-            var item = await FindAsync<Distance>(disatnceId);
+        //    var item = await FindAsync<Distance>(disatnceId);
 
-            item.Should().BeNull();
-        }
+        //    item.Should().BeNull();
+        //}
 
     }
 }

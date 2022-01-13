@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Interview.Application.Common.Models;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Interview.Application.Common.Behaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+        where TResponse : ActionResult,new()
     {
         private readonly ILogger<TRequest> _logger;
 
@@ -29,7 +31,7 @@ namespace Interview.Application.Common.Behaviours
                 var requestName = typeof(TRequest).Name;
 
                     _logger.LogError(ex, "Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
-                throw;
+               return (TResponse)new TResponse().Failure(ex.Message);
             }
         }
     }

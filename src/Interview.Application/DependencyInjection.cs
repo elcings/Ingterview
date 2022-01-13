@@ -1,9 +1,9 @@
-﻿using FluentValidation;
-using Interview.Application.CarError.Command;
+﻿using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
+using FluentValidation;
 using Interview.Application.Common.Behaviours;
 using Interview.Application.Common.Mapping;
-using Interview.Application.Distances.Command;
-using Interview.Application.Fuel.Command;
 using Interview.Application.Validations;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +32,20 @@ namespace Interview.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehaviour<,>));
+         //   services.AddScoped<CarStartedIntegrationEventHandler>();
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig config = new()
+                {
+                    ConnectionRetryCount = 3,
+                    EventNameSuffix = "IntegrationEvent",
+                    SubscriberClientAppName = "OrderService",
+                    EventBusType = EventBusType.RabbitMQ
+
+                };
+                return EventBusFactory.Create(config, sp);
+
+            });
 
             return services;
         }

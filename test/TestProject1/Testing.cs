@@ -1,6 +1,6 @@
 ﻿using Interview.Application;
 using Interview.Application.Common.Models;
-using Interview.Domain.Entities;
+using Interview.Domain.AggregateModels.Orders;
 using Interview.Domain.Repositories;
 using Interview.Infrastructure;
 using MediatR;
@@ -63,7 +63,7 @@ namespace Application.IntegrationTest
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var context = scope.ServiceProvider.GetRequiredService<CarDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
             context.Database.Migrate();
         }
@@ -89,7 +89,7 @@ namespace Application.IntegrationTest
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var context = scope.ServiceProvider.GetRequiredService<CarDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
             return await context.FindAsync<TEntity>(keyValues);
         }
@@ -99,48 +99,32 @@ namespace Application.IntegrationTest
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var context = scope.ServiceProvider.GetRequiredService<CarDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
             context.Add(entity);
 
             await context.SaveChangesAsync();
         }
 
-        public static async Task AddDistance(Distance distance)
+
+
+        public static async Task AddOrder(Order err)
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var repository = scope.ServiceProvider.GetRequiredService<IDistanceRepository>();
-
-           await repository.Create(distance);
-
-        }
-
-        public static async Task AddError(Error err)
-        {
-            using var scope = _scopeFactory.CreateScope();
-
-            var repository = scope.ServiceProvider.GetRequiredService<IErrorRepository>();
+            var repository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
 
             await repository.Create(err);
 
         }
 
-        public static async Task AddFuelLevel(FuelLevel level)
-        {
-            using var scope = _scopeFactory.CreateScope();
-
-            var repository = scope.ServiceProvider.GetRequiredService<IFuelLevelRepository>();
-
-            await repository.Create(level);
-
-        }
+       
 
         public static async Task<int> CountAsync<TEntity>() where TEntity : class
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var context = scope.ServiceProvider.GetRequiredService<CarDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
             return await context.Set<TEntity>().CountAsync();
         }

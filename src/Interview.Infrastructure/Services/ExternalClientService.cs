@@ -15,34 +15,21 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Services
 {
-    public class ExternalClientService: IExternalClientService
+    public class ExternalClientService: BaseClientService, IExternalClientService
     {
-        private readonly ILogger<ExternalClientService> _logger;
-        HttpClient _httpClient;
-        public ExternalClientService(ILogger<ExternalClientService> logger,HttpClient httpClient)
+
+        public ExternalClientService(HttpClient httpClient,ILogger<ExternalClientService> logger, ExternalSettings setting) 
+            :base(httpClient,logger,setting)
         {
-            _logger = logger;
-            _httpClient = httpClient;
+
         }
 
         public async Task<DinResponse> GetDinOfficesAsync()
         {
-             string content = string.Empty;
-            HttpResponseMessage response;
-            var policy = Policy.Handle<HttpRequestException>().Or<TaskCanceledException>()
-            .WaitAndRetryAsync(2, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)), (ex,time) =>
-              {
-                  _logger.LogError(ex, "Request:  ExternalClientService.GetFuelLevelAsync");
-              });
+            var response = await base.MakeRequest(HttpMethod.Get, "getDinOffices");
+           
+            var  content = await response.Content.ReadAsStringAsync();
 
-            
-           await policy.ExecuteAsync( async () =>
-          {
-              response = await _httpClient.GetAsync("getDinOffices");
-              response.EnsureSuccessStatusCode();
-              content = await response.Content.ReadAsStringAsync();
-             
-          });
             var result = JsonConvert.DeserializeObject<DinResponse>(content);
             return result;
         }

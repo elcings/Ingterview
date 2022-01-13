@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Interview.Application.Common.Behaviours
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
-        where TResponse : CQRSResponse,new()
+        where TResponse : ActionResult,new()
 
 
     {
@@ -43,7 +43,7 @@ namespace Interview.Application.Common.Behaviours
             if (!result.IsSuccess)
             {
                 _logger.LogError("Validation failed for {Request}.Error{error}",requestName,result.ErrorMessage);
-                return new TResponse() { StatusCode = System.Net.HttpStatusCode.BadRequest, Message = result.ErrorMessage };
+                return (TResponse)new TResponse().Failure(result.ErrorMessage );
             }
             return await next();
         }

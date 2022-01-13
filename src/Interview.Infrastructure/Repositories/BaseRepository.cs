@@ -11,11 +11,20 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Repositories
 {
-    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
-        private CarDbContext _ctx;
+        private OrderDbContext _ctx;
         private DbSet<TEntity> _dbSet;
-        public BaseRepository(CarDbContext ctx)
+
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                return _ctx;
+            }
+        }
+
+        public BaseRepository(OrderDbContext ctx)
         {
             _ctx = ctx;
             _dbSet = _ctx.Set<TEntity>();
@@ -27,7 +36,7 @@ namespace Interview.Infrastructure.Repositories
             return await _dbSet.OrderBy(x => x.Id).ToListAsync();
         }
 
-        public async Task<TEntity> GetById(Guid Id)
+        public virtual async Task<TEntity> GetById(Guid Id)
         {
             return await _dbSet.FirstOrDefaultAsync(x=>x.Id==Id);
         }
@@ -36,25 +45,22 @@ namespace Interview.Infrastructure.Repositories
         {
             var data = await _dbSet.FindAsync(Id);
             _ctx.Remove(data);
-            await _ctx.SaveChangesAsync();
         }
 
-        public async Task<TEntity> Create(TEntity obj)
+        public async Task<bool> Create(TEntity obj)
         {
-            obj.Id = Guid.NewGuid();
             var result = await _dbSet.AddAsync(obj);
-            await _ctx.SaveChangesAsync();
-            return obj;
+            return true;
+            
         }
 
 
-        public async Task<TEntity> Update(TEntity obj)
+        public async Task<bool> Update(TEntity obj)
         {
             var entity =await _dbSet.FindAsync(obj.Id);
             var entry = _ctx.Entry(entity);
             entry.CurrentValues.SetValues(obj);
-            await _ctx.SaveChangesAsync();
-            return obj;
+            return true;
         }
 
 
@@ -83,14 +89,26 @@ namespace Interview.Infrastructure.Repositories
 
         public async Task CreateList(List<TEntity> obj)
         {
-            _dbSet.AddRange(obj);
-            await  _ctx.SaveChangesAsync();
+            await _dbSet.AddRangeAsync(obj);
         }
 
         public async Task RemoveAll(List<TEntity> obj)
         {
-            _ctx.RemoveRange(obj);
-            await _ctx.SaveChangesAsync();
+           await Task.Run(() => _ctx.RemoveRange(obj)) ;
+        }
+
+        public virtual async Task<TEntity> GetByIdFilter(Guid Id, string includeProperties = "")
+        {
+            IQueryable<TEntity> query = _dbSet;
+           
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+           
+            return await query.FirstOrDefaultAsync();
         }
     }
 }
