@@ -3,6 +3,7 @@ using EventBus.Base.Abstraction;
 using EventBus.Factory;
 using Interview.Application;
 using Interview.Infrastructure;
+using Interview.Infrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -81,6 +82,7 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+            OrderDbContextSeed.Seed(app).Wait();
         }
     }
 }

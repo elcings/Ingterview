@@ -1,8 +1,10 @@
 ﻿using Interview.Domain.AggregateModels.Buyer;
 using Interview.Domain.AggregateModels.Orders;
 using Interview.Domain.Common;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System;
@@ -14,53 +16,44 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Context
 {
-   public class OrderDbContextSeed
+   public static class OrderDbContextSeed
     {
-        public async Task Seed(OrderDbContext dbContext, ILogger<OrderDbContextSeed> logger)
+        public static async Task Seed (this IApplicationBuilder builder)
         {
-
-            var policy = Policy.Handle<SqlException>().WaitAndRetryAsync(retryCount: 3, retry => TimeSpan.FromSeconds(3), (ex, s) =>
+            using (var scope = builder.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                logger.LogWarning(ex, "{Prefix} Exception {ExceptionType}", nameof(OrderDbContextSeed), ex.GetType());
-            });
-
-            await policy.ExecuteAsync(async () =>
-            {
+                var context = scope.ServiceProvider.GetService<OrderDbContext>();
+                var logger = scope.ServiceProvider.GetService<ILogger>();
 
                 bool useCustomizationData = false;
                 var contentRootPath = "";
 
+                context.Database.Migrate();
 
-                using (dbContext)
+                if (!context.CardTypes.Any())
                 {
-                    dbContext.Database.Migrate();
+                    context.CardTypes.AddRange(useCustomizationData
+                                            ? GetCardTypesFromFile(contentRootPath, logger)
+                                            : GetPredefinedCardTypes());
 
-                    if (!dbContext.CardTypes.Any())
-                    {
-                        dbContext.CardTypes.AddRange(useCustomizationData
-                                                ? GetCardTypesFromFile(contentRootPath, logger)
-                                                : GetPredefinedCardTypes());
-
-                        await dbContext.SaveChangesAsync();
-                    }
-
-                    if (!dbContext.OrderStatus.Any())
-                    {
-                        dbContext.OrderStatus.AddRange(useCustomizationData
-                                            ? GetOrderStatusFromFile(contentRootPath, logger)
-                                            : GetPredefinedOrderStatus());
-                    }
-
-                    await dbContext.SaveChangesAsync();
-
+                    await context.SaveChangesAsync();
                 }
-            });
+
+                if (!context.OrderStatus.Any())
+                {
+                    context.OrderStatus.AddRange(useCustomizationData
+                                        ? GetOrderStatusFromFile(contentRootPath, logger)
+                                        : GetPredefinedOrderStatus());
+                }
+
+                await context.SaveChangesAsync();
+            }
         
         
         }
 
 
-        private IEnumerable<CardType> GetCardTypesFromFile(string contentRootPath, ILogger<OrderDbContextSeed> log)
+        private static IEnumerable<CardType> GetCardTypesFromFile(string contentRootPath,ILogger logger)
         {
             string csvFileCardTypes = Path.Combine(contentRootPath, "Setup", "CardTypes.csv");
 
@@ -77,7 +70,7 @@ namespace Interview.Infrastructure.Context
             }
             catch (Exception ex)
             {
-                log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
+                logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
                 return GetPredefinedCardTypes();
             }
 
@@ -85,11 +78,11 @@ namespace Interview.Infrastructure.Context
             return File.ReadAllLines(csvFileCardTypes)
                                         .Skip(1) // skip header column
                                         .SelectTry(x => CreateCardType(x, ref id))
-                                        .OnCaughtException(ex => { log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
+                                        .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
                                         .Where(x => x != null);
         }
 
-        private CardType CreateCardType(string value, ref int id)
+        private static CardType CreateCardType(string value, ref int id)
         {
             if (String.IsNullOrEmpty(value))
             {
@@ -99,12 +92,12 @@ namespace Interview.Infrastructure.Context
             return new CardType(id++, value.Trim('"').Trim());
         }
 
-        private IEnumerable<CardType> GetPredefinedCardTypes()
+        private static IEnumerable<CardType> GetPredefinedCardTypes()
         {
             return Enumeration.GetAll<CardType>();
         }
 
-        private IEnumerable<OrderStatus> GetOrderStatusFromFile(string contentRootPath, ILogger<OrderDbContextSeed> log)
+        private static IEnumerable<OrderStatus> GetOrderStatusFromFile(string contentRootPath, ILogger log)
         {
             string csvFileOrderStatus = Path.Combine(contentRootPath, "Setup", "OrderStatus.csv");
 
@@ -133,7 +126,7 @@ namespace Interview.Infrastructure.Context
                                         .Where(x => x != null);
         }
 
-        private OrderStatus CreateOrderStatus(string value, ref int id)
+        private static OrderStatus CreateOrderStatus(string value, ref int id)
         {
             if (String.IsNullOrEmpty(value))
             {
@@ -143,7 +136,7 @@ namespace Interview.Infrastructure.Context
             return new OrderStatus(id++, value.Trim('"').Trim().ToLowerInvariant());
         }
 
-        private IEnumerable<OrderStatus> GetPredefinedOrderStatus()
+        private static IEnumerable<OrderStatus> GetPredefinedOrderStatus()
         {
             return new List<OrderStatus>()
         {
@@ -156,7 +149,7 @@ namespace Interview.Infrastructure.Context
         };
         }
 
-        private string[] GetHeaders(string[] requiredHeaders, string csvfile)
+        private static string[] GetHeaders(string[] requiredHeaders, string csvfile)
         {
             string[] csvheaders = File.ReadLines(csvfile).First().ToLowerInvariant().Split(',');
 

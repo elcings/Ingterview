@@ -41,7 +41,7 @@ namespace WebApi.Util
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError("An error occured while migrate to database used {Context}", typeof(TContext).Name);
+                    logger.LogError(ex,"An error occured while migrate to database used {Context}", typeof(TContext).Name);
                 }
                 return host;
                 

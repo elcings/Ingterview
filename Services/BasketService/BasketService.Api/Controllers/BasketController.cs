@@ -3,6 +3,7 @@ using BasketService.Api.Core.Application.Services;
 using BasketService.Api.Core.Domain;
 using BasketService.Api.IntegrationEvents.Events;
 using EventBus.Base.Abstraction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ namespace BasketService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _repository;
@@ -36,13 +38,29 @@ namespace BasketService.Api.Controllers
             _eventBus = eventBus;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{customerId}")]
         [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CustomerBasket>> GetBasketByIdAsync(string id)
+        public async Task<ActionResult<CustomerBasket>> GetBasketByIdAsync(string customerId)
         {
-            var basket = await _repository.GetBasketAsync(id);
+            var basket = await _repository.GetBasketAsync(customerId);
 
-            return Ok(basket ?? new CustomerBasket(id));
+            return Ok(basket ?? new CustomerBasket(customerId));
+        }
+
+        [HttpPost("additem")]
+        [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<CustomerBasket>> AddItemToBasketBasketAsync([FromBody] BasketItem value)
+        {
+
+            var userName = _identityService.UserName.ToString();
+
+            var basket = await _repository.GetBasketAsync(userName);
+            if (basket == null)
+                basket = new CustomerBasket(userName);
+
+            basket.Items.Add(value);
+            await _repository.UpdateBasketAsync(basket);
+            return Ok();
         }
 
         [HttpPost]
@@ -73,7 +91,7 @@ namespace BasketService.Api.Controllers
                 return BadRequest();
             }
 
-            var userName = _identityService.GetUserName();
+            var userName = _identityService.UserName;
 
             var eventMessage = new OrderCreatedIntegraionEvent(userId, userName, basketCheckout.City, basketCheckout.Street,
                 basketCheckout.State, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.CardNumber, basketCheckout.CardHolderName,

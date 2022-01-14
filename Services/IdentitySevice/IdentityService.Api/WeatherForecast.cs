@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi
+namespace IdentityService.Api
 {
     public class WeatherForecast
     {

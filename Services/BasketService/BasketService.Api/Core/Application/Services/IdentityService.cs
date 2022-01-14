@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BasketService.Api.Extensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,14 @@ namespace BasketService.Api.Core.Application.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetUserName()
+        public string UserName
         {
-          return  _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            get
+            {
+                var fullname = _httpContextAccessor.HttpContext.User?.Identity?.GetUserName();
+                return fullname;
+            }
         }
+       
     }
 }
