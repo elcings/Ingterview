@@ -3,9 +3,11 @@ using EventBus.Base.Abstraction;
 using EventBus.Factory;
 using FluentValidation;
 using Interview.Application.Common.Behaviours;
+using Interview.Application.Common.Extensions;
 using Interview.Application.Common.Mapping;
 using Interview.Application.Validations;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace Interview.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+          
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile(new MappingProfile());

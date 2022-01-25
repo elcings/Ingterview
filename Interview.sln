@@ -23,21 +23,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.RabbitMQ", "..\Mic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.IntegrationTest", "test\TestProject1\Application.IntegrationTest.csproj", "{82E62F8F-8511-4B9C-836E-EA6D7CC23B5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Api", "src\WebApi\Order.Api.csproj", "{9856D20C-4085-4F89-992D-85B296CDAABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Api", "src\WebApi\Order.Api.csproj", "{9856D20C-4085-4F89-992D-85B296CDAABA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9E7E1172-1167-4FB3-8D54-4F2CE6F53454}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasketService", "BasketService", "{89B0EF04-1EF6-460D-9C23-F0FB7853AB93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Api", "Services\BasketService\BasketService.Api\BasketService.Api.csproj", "{E1E6AB27-4C11-44F3-A955-D91EE88EA21B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Api", "Services\BasketService\BasketService.Api\BasketService.Api.csproj", "{E1E6AB27-4C11-44F3-A955-D91EE88EA21B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentitySevice", "IdentitySevice", "{DA8486DB-D11A-4AC2-B270-DED02BC3DB0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService.Api", "Services\IdentitySevice\IdentityService.Api\IdentityService.Api.csproj", "{1712C204-7D53-4CF4-A505-62DA09C76C94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Api", "Services\IdentitySevice\IdentityService.Api\IdentityService.Api.csproj", "{1712C204-7D53-4CF4-A505-62DA09C76C94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationService", "NotificationService", "{0A895488-F6DC-443B-9574-49B53502AA77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Api", "Services\NotificationServices\NotificationService.Api\NotificationService.Api.csproj", "{B412D356-69ED-4369-8E7F-6F3CC9A458F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.Api", "Services\NotificationServices\NotificationService.Api\NotificationService.Api.csproj", "{B412D356-69ED-4369-8E7F-6F3CC9A458F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentService", "PaymentService", "{4CFB5969-BBE8-40A0-86EB-BA6978DCFCA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Api", "Services\PaymentService\Payment.Api\Payment.Api.csproj", "{0D2BF5EC-6382-4F28-ACA0-3B548F848B35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{FE790BC8-E948-4CCF-B136-13B756D1C0D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.GateWay", "src\ApiGateway\Api.GateWay\Api.GateWay.csproj", "{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +97,14 @@ Global
 		{B412D356-69ED-4369-8E7F-6F3CC9A458F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B412D356-69ED-4369-8E7F-6F3CC9A458F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B412D356-69ED-4369-8E7F-6F3CC9A458F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2BF5EC-6382-4F28-ACA0-3B548F848B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2BF5EC-6382-4F28-ACA0-3B548F848B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2BF5EC-6382-4F28-ACA0-3B548F848B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2BF5EC-6382-4F28-ACA0-3B548F848B35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +126,10 @@ Global
 		{1712C204-7D53-4CF4-A505-62DA09C76C94} = {DA8486DB-D11A-4AC2-B270-DED02BC3DB0D}
 		{0A895488-F6DC-443B-9574-49B53502AA77} = {9E7E1172-1167-4FB3-8D54-4F2CE6F53454}
 		{B412D356-69ED-4369-8E7F-6F3CC9A458F6} = {0A895488-F6DC-443B-9574-49B53502AA77}
+		{4CFB5969-BBE8-40A0-86EB-BA6978DCFCA3} = {9E7E1172-1167-4FB3-8D54-4F2CE6F53454}
+		{0D2BF5EC-6382-4F28-ACA0-3B548F848B35} = {4CFB5969-BBE8-40A0-86EB-BA6978DCFCA3}
+		{FE790BC8-E948-4CCF-B136-13B756D1C0D7} = {D8019F13-A844-423C-92B9-95B92E42A95A}
+		{B51610B0-80F2-44FD-AD92-59AA2ED9A5B5} = {FE790BC8-E948-4CCF-B136-13B756D1C0D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64CF07C6-C096-46EE-BED9-0FF81160BDAA}

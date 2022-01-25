@@ -11,6 +11,8 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using Polly;
 using Polly.Extensions.Http;
+using Microsoft.AspNetCore.Http;
+using Interview.Application.Common.Extensions;
 
 namespace Interview.Infrastructure
 {
@@ -18,6 +20,7 @@ namespace Interview.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.ConfigureAuth(configuration);
             services.AddDbContext<OrderDbContext>(option => 
                 option.UseSqlServer(configuration.GetConnectionString("DefaultDBConnection"), sqlServerOptionsAction: b =>
                 {
@@ -26,7 +29,8 @@ namespace Interview.Infrastructure
                     errorNumbersToAdd: null);
                 }).EnableSensitiveDataLogging());
 
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddScoped<ICarDbContext>(provider => provider.GetRequiredService<OrderDbContext>());
 

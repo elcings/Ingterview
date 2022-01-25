@@ -17,12 +17,14 @@ namespace Interview.Infrastructure
    public class OrderDbContext:DbContext, ICarDbContext,IUnitOfWork
     {
         private readonly IDomainEventService _domainEventService;
+        private readonly IIdentityService _identityService;
         private IMediator _mediator;
 
         public const string DEFAULT_SCHEMA = "ordering";
-        public OrderDbContext(DbContextOptions<OrderDbContext> options,IMediator mediator) : base(options)
+        public OrderDbContext(DbContextOptions<OrderDbContext> options,IMediator mediator,IIdentityService identityService) : base(options)
         {
             _mediator = mediator;
+            _identityService = identityService;
         }
 
         public DbSet<Order> Orders  => Set<Order>();
@@ -77,11 +79,12 @@ namespace Interview.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = "Service";
+                        entry.Entity.CreatedBy = _identityService.UserName;
                         entry.Entity.Created = DateTime.Now;
                         break;
 
                     case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = _identityService.UserName;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
                 }

@@ -1,31 +1,15 @@
-﻿using Ardalis.GuardClauses;
-using Interview.Application.Validations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Interview.Application.Common
+namespace IdentityService.Api.Extensions
 {
-    public static class ExtensionMetods
+    public static class IdentityExt
     {
-        public static bool IsNullOrEmpty(this IGuardClause guardClause, string input, string paramName, string message, out ValidationResult result)
-        {
-            result = default;
-            if (string.IsNullOrEmpty(input))
-            {
-                result = ValidationResult.Fail(message);
-                return true;
-            }
-            return false;
-
-        }
-
-
         public static string GetUserName(this IIdentity identity)
         {
             try
@@ -61,6 +45,5 @@ namespace Interview.Application.Common
         }
 
         #endregion
-
     }
 }

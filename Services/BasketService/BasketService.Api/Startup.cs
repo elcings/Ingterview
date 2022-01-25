@@ -41,7 +41,6 @@ namespace BasketService.Api
           
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBasketRepository, BasketRepository>();
-           // services.AddHttpContextAccessor();
             services.AddTransient<IIdentityService, IdentityService>();
           //  services.AddAuthorization();
             services.ConfigureAuth(Configuration);

@@ -21,6 +21,7 @@ namespace IdentityService.Api.Infrastructure
             services.AddDbContext<IdentityContext>(option => {
                 option.UseSqlServer(configuration.GetConnectionString("DefaultDBConnection"));
             });
+            services.AddTransient<ISessionService, SessionService>();
 
             services.AddScoped<IActionInvoker, BaseActionInvoker>();
 
