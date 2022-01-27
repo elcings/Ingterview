@@ -35,7 +35,7 @@ namespace Order.Api.Util
             var logger = loggerFactory.CreateLogger<IApplicationBuilder>();
 
 
-            var features = app.Properties["server:Features"] as FeatureCollection;
+            var features = app.ServerFeatures;
             var addresses = features.Get<IServerAddressesFeature>();
             var address = addresses.Addresses.First();
 

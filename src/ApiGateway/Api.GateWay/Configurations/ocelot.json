@@ -1,21 +1,8 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/order/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5002
-        }
-      ],
-      "UpstreamPathTemplate": "/order/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "IdentityService",
+      //"UseServiceDiscovery": true,
+      //"ServiceName": "IdentityService",
       "DownstreamPathTemplate": "/api/Identity/login",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -28,28 +15,47 @@
       "UpstreamHttpMethod": [ "Post" ],
       "UpstreamScheme": "http"
     },
+
     {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BasketService",
+      "DownstreamPathTemplate": "/api/order/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "auth_scheme",
+        "AllowedScopes": []
+      },
+      "UpstreamPathTemplate": "/order/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      //"UseServiceDiscovery": true,
+      //"ServiceName": "BasketService",
       "DownstreamPathTemplate": "/api/basket/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5001
+          "Port": 5003
         }
       ],
-      "UpstreamPathTemplate": "/identity/login",
+      "UpstreamPathTemplate": "/basket/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http"
     }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000",
-    "ServiceDiscoveryProvider": {
-      "Host": "localhost",
-      "Port": 8500,
-      "Type": "Consul"
-    }
-  }
+  ]
+  //"GlobalConfiguration": {
+  //  "BaseUrl": "http://localhost:5000"
+  //  //"ServiceDiscoveryProvider": {
+  //  //  "Host": "localhost",
+  //  //  "Port": 8500,
+  //  //  "Type": "Consul"
+  //  //}
+  //}
 }

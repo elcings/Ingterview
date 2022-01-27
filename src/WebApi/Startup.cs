@@ -126,7 +126,7 @@ namespace WebApi
                 endpoints.MapControllers();
             });
             OrderDbContextSeed.Seed(app).Wait();
-            app.RegisterWithConsul(lifetime);
+           // app.RegisterWithConsul(lifetime);
         }
     }
 }

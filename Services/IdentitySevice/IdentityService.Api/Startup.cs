@@ -44,7 +44,7 @@ namespace IdentityService.Api
             services.AddAuthorization();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
-            services.ConfigureConsul(Configuration);
+            //services.ConfigureConsul(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -113,7 +113,7 @@ namespace IdentityService.Api
             });
 
             DbInit.Seed(app);
-            app.RegisterWithConsul(lifetime);
+           // app.RegisterWithConsul(lifetime);
         }
     }
 }

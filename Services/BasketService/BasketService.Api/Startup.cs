@@ -44,7 +44,7 @@ namespace BasketService.Api
             services.AddTransient<IIdentityService, IdentityService>();
           //  services.AddAuthorization();
             services.ConfigureAuth(Configuration);
-            services.ConfigureConsul(Configuration);
+         //   services.ConfigureConsul(Configuration);
             services.AddSingleton(s => s.ConfigureRedis(Configuration));
             services.AddSingleton<IEventBus>(sp =>
             {
@@ -129,7 +129,7 @@ namespace BasketService.Api
             });
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<OrderCreatedIntegraionEvent, OrderCreatedIntegrationEventHandler>();
-            app.RegisterWithConsul(lifetime);
+          //  app.RegisterWithConsul(lifetime);
         }
     }
 }

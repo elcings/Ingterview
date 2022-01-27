@@ -1,3 +1,4 @@
+using Api.GateWay.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,9 +30,12 @@ namespace Api.GateWay
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOcelot().AddConsul();
+            services.AddOcelot(); 
 
             services.AddControllers();
+            services.ConfigureAuth(Configuration);
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api.GateWay", Version = "v1" });
@@ -39,7 +43,7 @@ namespace Api.GateWay
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async  void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

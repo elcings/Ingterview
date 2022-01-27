@@ -27,7 +27,7 @@ namespace Order.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("Id")]
+        [HttpGet("{Id}")]
         public async Task<IActionResult> Get(Guid Id)
         {
             var result = await _mediator.Send(new GetOrderDetailQuery() { OrderId = Id });
