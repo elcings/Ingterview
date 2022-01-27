@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Order.Api.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace WebApi
             services.AddControllers() ;
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+            services.ConfigureConsul(Configuration);
             //services.AddScoped<CarStoppedCompletedIntegrationEventHandler>();
             services.AddSingleton<IEventBus>(sp =>
             {
@@ -99,7 +101,7 @@ namespace WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -124,6 +126,7 @@ namespace WebApi
                 endpoints.MapControllers();
             });
             OrderDbContextSeed.Seed(app).Wait();
+            app.RegisterWithConsul(lifetime);
         }
     }
 }

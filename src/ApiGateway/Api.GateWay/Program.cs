@@ -18,6 +18,12 @@ namespace Api.GateWay
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((hostContext,config)=> {
+                config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath)
+                    .AddJsonFile("Configurations/ocelot.json")
+                    .AddEnvironmentVariables();
+            
+            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

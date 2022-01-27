@@ -1,0 +1,10 @@
+
+ApiGatWay:http://localhost:5000
+
+
+IdentityService:http://localhost:5001
+OrderService: http://localhost:5002
+BasketService:http://localhost:5003
+
+PaymentService:http://localhost:5000
+CatalogService:http://localhost:5000

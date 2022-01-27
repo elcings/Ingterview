@@ -1,4 +1,5 @@
 using IdentityService.Api.Core.Application;
+using IdentityService.Api.Extensions;
 using IdentityService.Api.Infrastructure;
 using IdentityService.Api.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,6 +44,7 @@ namespace IdentityService.Api
             services.AddAuthorization();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
+            services.ConfigureConsul(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -90,7 +92,7 @@ namespace IdentityService.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -111,6 +113,7 @@ namespace IdentityService.Api
             });
 
             DbInit.Seed(app);
+            app.RegisterWithConsul(lifetime);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Interview.Application.Common.Interfaces;
 using Interview.Application.Common.Models;
 using Interview.Domain.Repositories;
 using MediatR;
@@ -11,11 +12,12 @@ using System.Threading.Tasks;
 
 namespace Interview.Application.OrderFutures.Query
 {
-    public class GetOrderDetailQuery:IRequest<ActionResult<OrderDetailViewModel>>
+    public class GetOrderDetailQuery:IRequest<ActionResult<OrderDetailViewModel>>,ICacheable
     {
 
         public Guid OrderId { get; set; }
-        
+
+        public string CacheKey => $"GetOrderDetailById-{OrderId}";
     }
 
     public class GetOrderDetailQueryHandler : IRequestHandler<GetOrderDetailQuery, ActionResult<OrderDetailViewModel>>

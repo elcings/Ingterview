@@ -44,6 +44,7 @@ namespace BasketService.Api
             services.AddTransient<IIdentityService, IdentityService>();
           //  services.AddAuthorization();
             services.ConfigureAuth(Configuration);
+            services.ConfigureConsul(Configuration);
             services.AddSingleton(s => s.ConfigureRedis(Configuration));
             services.AddSingleton<IEventBus>(sp =>
             {
@@ -106,7 +107,7 @@ namespace BasketService.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -128,6 +129,7 @@ namespace BasketService.Api
             });
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<OrderCreatedIntegraionEvent, OrderCreatedIntegrationEventHandler>();
+            app.RegisterWithConsul(lifetime);
         }
     }
 }
